@@ -18,6 +18,8 @@ function PlacesList({ places }) {
       data={places}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <PlaceItem place={item} />}
+      // render item takes a function as an argument and is executed for every item in a data array
+      // item is a single element in a places array
     />
   );
 }
