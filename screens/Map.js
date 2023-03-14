@@ -57,7 +57,7 @@ function Map({ navigation }) {
     >
       {selectedLocation && (
         <Marker
-          title="Picked location"
+        title="Picked location"
           coordinate={{
             latitude: selectedLocation.lat,
             longitude: selectedLocation.lng,

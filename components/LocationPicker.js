@@ -82,6 +82,7 @@ function LocationPicker() {
       />
     );
   }
+
   return (
     <View>
       <View style={styles.mapPreview}>{locationPreview}</View>
@@ -89,7 +90,7 @@ function LocationPicker() {
         <OutlinedButton icon="location" onPress={getLocationHandler}>
           Locate User
         </OutlinedButton>
-        <OutlinedButton icon="location" onPress={pickOnMapHandler}>
+        <OutlinedButton icon="map" onPress={pickOnMapHandler}>
           Pick on Map
         </OutlinedButton>
       </View>
