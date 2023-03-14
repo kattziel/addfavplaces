@@ -12,7 +12,7 @@ function PlaceForm() {
 
   return (
     <ScrollView style={styles.form}>
-      <View>
+      <View style={styles.container}>
         <Text style={styles.label}>Title</Text>
         <TextInput style={styles.input} onChangeText={changeTitleHandler} value={enteredTitle} />
       </View>

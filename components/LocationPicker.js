@@ -1,6 +1,10 @@
 import { StyleSheet, View, Alert, Text, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from "@react-navigation/native";
+import { useState, useEffect } from "react";
 
 import {
   getCurrentPositionAsync,
@@ -12,14 +16,26 @@ import { getMapPreview } from "../util/location";
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../constants/colors";
 
-
 function LocationPicker() {
-  const [pickedLocation, setPickedLocation] = useState("");
+  const [pickedLocation, setPickedLocation] = useState();
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation();
+  const route = useRoute();
 
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng
+      };
+      // when going back after picking a location from a Map.js, we are getting route params, eg. pickedLng and pickedLat
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
 
   async function verifyPermissions() {
     if (
@@ -51,7 +67,7 @@ function LocationPicker() {
     });
   }
   function pickOnMapHandler() {
-    navigation.navigate('Map');
+    navigation.navigate("Map");
   }
 
   let locationPreview = <Text>No location picked yet!</Text>;
@@ -60,7 +76,9 @@ function LocationPicker() {
     locationPreview = (
       <Image
         style={styles.image}
-        source={{ uri: getMapPreview(pickedLocation.lat, pickedLocation.lng) }}
+        source={{
+          uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
+        }}
       />
     );
   }
