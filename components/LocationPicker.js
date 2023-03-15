@@ -16,7 +16,7 @@ import { getMapPreview } from "../util/location";
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../constants/colors";
 
-function LocationPicker() {
+function LocationPicker({onPickLocation}) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
@@ -36,6 +36,11 @@ function LocationPicker() {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(()=>{
+    onPickLocation(pickedLocation)
+  },[pickedLocation, onPickLocation]);
+  // as onPickLocation so function is called in useEffect, it should also be added to the dependency array
 
   async function verifyPermissions() {
     if (
