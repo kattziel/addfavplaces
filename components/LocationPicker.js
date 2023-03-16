@@ -12,11 +12,11 @@ import {
   PermissionStatus,
 } from "expo-location";
 
-import { getMapPreview } from "../util/location";
+import { getMapPreview, getAddress } from "../util/location";
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../constants/colors";
 
-function LocationPicker({onPickLocation}) {
+function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
@@ -30,16 +30,22 @@ function LocationPicker({onPickLocation}) {
     if (isFocused && route.params) {
       const mapPickedLocation = {
         lat: route.params.pickedLat,
-        lng: route.params.pickedLng
+        lng: route.params.pickedLng,
       };
       // when going back after picking a location from a Map.js, we are getting route params, eg. pickedLng and pickedLat
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
 
-  useEffect(()=>{
-    onPickLocation(pickedLocation)
-  },[pickedLocation, onPickLocation]);
+  useEffect(() => {
+    async function handleLocation() {
+      if (pickedLocation) {
+        getAddress(pickedLocation.lat, pickedLocation.lng);
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    }
+    handleLocation();
+  }, [pickedLocation, onPickLocation]);
   // as onPickLocation so function is called in useEffect, it should also be added to the dependency array
 
   async function verifyPermissions() {
