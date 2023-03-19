@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../../UI/OutlinedButton";
 
-function ImagePicker({onTakeImage}) {
+function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState();
 
   const [cameraPermissionInformation, requestPermission] =
@@ -39,8 +39,12 @@ function ImagePicker({onTakeImage}) {
       aspect: [16, 9],
       quality: 0.5,
     });
-    setPickedImage(image.uri);
-    onTakeImage(image.uri);
+
+    const [firstPhotoData] = image.assets;
+    const uri = firstPhotoData.uri;
+
+    setPickedImage(uri);
+    onTakeImage(uri);
     // we are also passing it back to Form component
   }
 
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.primary100,
     borderRadius: 4,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   image: {
     width: "100%",

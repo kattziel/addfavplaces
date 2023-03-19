@@ -18,12 +18,10 @@ function PlaceForm({ onCreatePlace }) {
   const pickLocationHandler = useCallback((location) => {
     setPickedLocation(location);
   }, []);
+
   // avoiding the infinite loop and unnecessary rerendering of a function through useCallback
 
   function savePlaceHandler() {
-    // console.log(enteredTitle);
-    // console.log(selectedImage);
-    // console.log(pickedLocation);
     const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
     onCreatePlace(placeData);
   }
@@ -43,7 +41,9 @@ function PlaceForm({ onCreatePlace }) {
         />
         <ImagePicker onTakeImage={takeImageHandler} />
         <LocationPicker onPickLocation={pickLocationHandler} />
-        <Button style={styles.button} onPress={savePlaceHandler}>Add place</Button>
+        <Button style={styles.button} onPress={savePlaceHandler}>
+          Add place
+        </Button>
       </View>
     </ScrollView>
   );

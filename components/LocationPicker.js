@@ -40,7 +40,10 @@ function LocationPicker({ onPickLocation }) {
   useEffect(() => {
     async function handleLocation() {
       if (pickedLocation) {
-        getAddress(pickedLocation.lat, pickedLocation.lng);
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
         onPickLocation({ ...pickedLocation, address: address });
       }
     }
@@ -70,14 +73,9 @@ function LocationPicker({ onPickLocation }) {
     if (!hasPermission) {
       return;
     }
-    let pickedLocation
-    try {
-      pickedLocation = await getCurrentPositionAsync();
-    } catch (error) {
-      console.log(error, 'error')
-    }
 
-    console.log(pickedLocation, 'pickedLocation');
+    const pickedLocation = await getCurrentPositionAsync();
+
     setPickedLocation({
       lat: pickedLocation.coords.latitude,
       lng: pickedLocation.coords.longitude,
