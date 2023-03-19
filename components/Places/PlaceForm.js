@@ -16,7 +16,6 @@ function PlaceForm({ onCreatePlace }) {
   }
 
   const pickLocationHandler = useCallback((location) => {
-    console.log(location)
     setPickedLocation(location);
   }, []);
   // avoiding the infinite loop and unnecessary rerendering of a function through useCallback
@@ -42,10 +41,10 @@ function PlaceForm({ onCreatePlace }) {
           onChangeText={changeTitleHandler}
           value={enteredTitle}
         />
+        <ImagePicker onTakeImage={takeImageHandler} />
+        <LocationPicker onPickLocation={pickLocationHandler} />
+        <Button style={styles.button} onPress={savePlaceHandler}>Add place</Button>
       </View>
-      <ImagePicker onTakeImage={takeImageHandler} />
-      <LocationPicker onPickLocation={pickLocationHandler} />
-      <Button onPress={savePlaceHandler}>Add place</Button>
     </ScrollView>
   );
 }
@@ -55,6 +54,8 @@ export default PlaceForm;
 const styles = StyleSheet.create({
   form: {
     flex: 1,
+  },
+  container: {
     padding: 24,
   },
   label: {
