@@ -70,11 +70,17 @@ function LocationPicker({ onPickLocation }) {
     if (!hasPermission) {
       return;
     }
+    let pickedLocation
+    try {
+      pickedLocation = await getCurrentPositionAsync();
+    } catch (error) {
+      console.log(error, 'error')
+    }
 
-    const location = await getCurrentPositionAsync();
+    console.log(pickedLocation, 'pickedLocation');
     setPickedLocation({
-      lat: location.coords.latitude,
-      lng: location.coords.longitude,
+      lat: pickedLocation.coords.latitude,
+      lng: pickedLocation.coords.longitude,
     });
   }
   function pickOnMapHandler() {

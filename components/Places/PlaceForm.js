@@ -16,6 +16,7 @@ function PlaceForm({ onCreatePlace }) {
   }
 
   const pickLocationHandler = useCallback((location) => {
+    console.log(location)
     setPickedLocation(location);
   }, []);
   // avoiding the infinite loop and unnecessary rerendering of a function through useCallback
